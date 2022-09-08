@@ -8,11 +8,11 @@ class N_gram:
     finish_dict = {}
     list_words = ''
 
-    def fit(self, text, n):
+    def fit(self, text):
         table = str.maketrans('', '', string.punctuation)
         self.list_words = [w.translate(table).lower() for w in text.split()]
         length_list_words = len(self.list_words)
-        N = [tuple(self.list_words[i:i + n]) for i in range(length_list_words) if len(self.list_words[i:i + n]) == n]
+        N = [tuple(self.list_words[i:i + 2]) for i in range(length_list_words) if len(self.list_words[i:i + 2]) == 2]
         d = self.count_words(self.list_words)
         words = self.count_words(N)
         for i in words:
@@ -53,6 +53,6 @@ class N_gram:
 with codecs.open('data.txt', 'r') as f:
     text = f.read()
 Ngram = N_gram()
-Ngram.fit(text, 2)
+Ngram.fit(text)
 with open('model.pkl', 'wb') as f:
     pickle.dump(Ngram, f)
